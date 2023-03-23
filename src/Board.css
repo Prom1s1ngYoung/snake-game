@@ -1,0 +1,18 @@
+.panels {
+  width: 600px;
+  height: 600px;
+  background-color: aqua;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  gap: 0;
+}
+.pixel {
+  width: 58px;
+  height: 58px;
+  background-color: white;
+  border: 1px solid black;
+}
+.snake {
+  background-color: aqua;
+}
