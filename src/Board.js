@@ -18,7 +18,7 @@ function Board () {
 	const [dir, setDir] = useState(dirEnum.right)
 	const move = () => {
 		const head = snake[snake.length - 1]
-		console.log(head)
+		//console.log(head)
 		const newRow = Math.floor(head / 10) + dir[0]
 		const newCol = head % 10 + dir[1]
 		const newSnake = [...snake]
@@ -55,18 +55,6 @@ function Board () {
 		}
 		return false
 	}
-	const changeDownDir = () => {
-		setDir(dirEnum.down)
-	}
-	const changeRightDir = () => {
-		setDir(dirEnum.right)
-	}
-	const changeLeftDir = () => {
-		setDir(dirEnum.left)
-	}
-	const changeUpDir = () => {
-		setDir(dirEnum.up)
-	}
 	useEffect(() => {
 		if (isEat === false) {
 			return
@@ -80,13 +68,45 @@ function Board () {
 	}, [isEat])
 	useEffect(() => {
 		const head = snake[snake.length - 1]
-		console.log(divRef.current[head])
+		//console.log(divRef.current[head])
 		divRef.current[head].style.backgroundColor = 'aqua'
 	}, [snake])
 	useEffect(() => {
 		const foodPos = food
 		divRef.current[foodPos].style.backgroundColor = 'yellow'
 	}, [food])
+	useEffect(() => {
+		const handleKeyDown = (event) => {
+			//console.log(event.key)
+			//console.log(dir)
+			switch (event.key) {
+				case 'w':
+					setDir(dirEnum.up)
+					break
+				case 'a':
+					setDir(dirEnum.left)
+					break
+				case 's':
+					setDir(dirEnum.down)
+					break
+				case 'd':
+					setDir(dirEnum.right)
+					break
+				default:
+					break
+			}
+		}
+		window.addEventListener('keydown', handleKeyDown)
+		return () => {
+			window.removeEventListener('keydown', handleKeyDown)
+		}
+	}, [dir])
+	useEffect(() => {
+		const timerId = setTimeout(move, 500)
+		return () => {
+			clearTimeout(timerId)
+		}
+	}, [snake, move])
 	const getBoard = () => {
 		const board = []
 		for (let i = 0; i < 10; i++) {
@@ -102,11 +122,7 @@ function Board () {
 			<div className="panels">
 				{getBoard()}
 			</div>
-			<button onClick={move}>move</button>
-			<button onClick={changeRightDir}>right</button>
-			<button onClick={changeLeftDir}>left</button>
-			<button onClick={changeDownDir}>down</button>
-			<button onClick={changeUpDir}>up</button>
+			{/* <button onClick={move}>move</button> */}
 		</div>
 	)
 }
