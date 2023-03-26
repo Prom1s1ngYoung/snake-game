@@ -98,15 +98,16 @@ function Board () {
 		}
 		window.addEventListener('keydown', handleKeyDown)
 		return () => {
+			//When window closed
 			window.removeEventListener('keydown', handleKeyDown)
 		}
-	}, [dir])
+	}, [])
 	useEffect(() => {
 		const timerId = setTimeout(move, 500)
 		return () => {
 			clearTimeout(timerId)
 		}
-	}, [snake, move])
+	}, [snake])
 	const getBoard = () => {
 		const board = []
 		for (let i = 0; i < 10; i++) {
